@@ -1,6 +1,18 @@
 nvram-faker
 ===========
 
+OVERVIEW OF THIS FORK
+--------------------------
+This is a fork of Zachary Cutlip's [nvram-faker](https://github.com/zcutlip/nvram-faker) with the following changes:
+
+- More informative debug output
+- The `build_and_run.sh` script to streamline developing and testing with `libnvram-faker.so`
+- Resolve segmentation fault in debugging output
+- Added additional symbols to `nvram-faker.c` such as `initialise_monitor_handles` and `__libc_fini_array` to avoid linking errors
+- Add a preliminary `nvram_set()` function that logs debug output to prevent function calls to `libnvram.so`
+
+By modifying nvram-faker in this way, I was able to more easily emulate and debug the NVRAM of a firmware image that I was testing.
+
 When using emulation to run an application found in an embedded Linux firmware, such as a wireless router's web server, one of the main problems encountered is the application attempting to source NVRAM for configuration parameters.  A common library, `libnvram.so`, is often used in embedded Linux to abstract access to NVRAM.  This provides `nvram_get()` and `nvram_set()` functions to get and set configuration parameters.  The calls to `nvram_get()` will fail, since the emulated environment has no NVRAM.  Without configuration parameters the target application will likely fail to run.
 
 `nvram-faker` is a simple library to intercept calls to libnvram using `LD_PRELOAD`.  By providing sane values in an INI-style NVRAM configuration file you can answer queries to NVRAM, enabling the application to start up and run.

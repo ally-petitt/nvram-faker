@@ -22,11 +22,11 @@ void end(void);
 #endif
 
 #ifdef DEBUG
-#define DEBUG_PRINTF(format,...) fprintf(stderr,format,## __VA_ARGS__)
+#define DEBUG_PRINTF(format,...) printf(format,## __VA_ARGS__)
 #else
 #define DEBUG_PRINTF(format,...)
 #endif
 
-#define LOG_PRINTF(format,...) fprintf(stderr,format, ## __VA_ARGS__)
+#define LOG_PRINTF(format,...) printf(format, ## __VA_ARGS__)
 
 #endif /* __nvram_faker_internal_h */

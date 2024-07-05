@@ -14,9 +14,12 @@ static int kv_count=0;
 static int key_value_pair_len=DEFAULT_KV_PAIR_LEN;
 static char **key_value_pairs=NULL;
 
+
+//user is a pointer to our key_value_pairs
 static int ini_handler(void *user, const char *section, const char *name,const char *value)
 {
 
+    DEBUG_PRINTF("ini_handler(user: %x, section: %s, name: %s, value: %s)");
     int old_kv_len;
     char **kv;
     char **new_kv;
@@ -93,6 +96,7 @@ void initialize_ini(void)
 
 void end(void)
 {
+    DEBUG_PRINTF("end");
     int i;
     for (i=0;i<kv_count;i++)
     {
@@ -110,6 +114,9 @@ char *nvram_get(const char *key)
     int found=0;
     char *value;
     char *ret;
+
+    DEBUG_PRINTF("nvram_get(key: %s)\n", key);
+
     for(i=0;i<kv_count;i+=2)
     {
         if(strcmp(key,key_value_pairs[i]) == 0)
@@ -133,4 +140,31 @@ char *nvram_get(const char *key)
     return ret;
 }
 
+int nvram_set(char * key, char * value) {
+
+    // 1. set the value in memory
+    // if the value already exists in memory, it is probably already
+    // in the nvram.ini file, so we need to parse in order to modify it
+    
+    // if it's not already in memory, we should be able to append the
+    // new key and value to the nvram.ini file and it will work
+    // assuming there is no reliance on the section that it is in
+
+    // 2. Set the value in the vnram.ini file
+    // 
+	DEBUG_PRINTF("nvram_set(key: %s, value: %s)\n", key, value);
+    return 0;
+}
+
+void main(){
+	write(1, "libnvram-faker.so has loaded\n", 29);
+}
+
+
+void* initialise_monitor_handles;
+void* __heap_limit;
+void (*__libc_fini_array[]) (void);
+void (*__libc_init_array[]) (void);
+struct _reent * _impure_ptr;
+char _ctype_;
 

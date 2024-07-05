@@ -36,6 +36,7 @@ $(INI_OBJ):
 
 $(LIB): $(OBJS) $(INI_OBJ)
 	$(CC) -shared -o $@ $^ -Wl,-nostdlib
+#	$(CC) -shared -o $@ $^ -static
 
 nvram_faker_exe:$(EXE_OBJ) $(OBJS) $(INI_OBJ)
 	$(CC) -Wall -o $@ $^ 
