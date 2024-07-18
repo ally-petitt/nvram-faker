@@ -15,8 +15,9 @@ static int key_value_pair_len=DEFAULT_KV_PAIR_LEN;
 static char **key_value_pairs=NULL;
 
 
+
 //user is a pointer to our key_value_pairs
-static int ini_handler(void *user, const char *section, const char *name,const char *value)
+static int handle_ini(void *user, const char *section, const char *name,const char *value)
 {
 
     DEBUG_PRINTF("ini_handler(user: %x, section: %s, name: %s, value: %s)");
@@ -76,8 +77,10 @@ void initialize_ini(void)
         LOG_PRINTF("Failed to allocate memory for key value array. Terminating.\n");
         exit(1);
     }
+
+    ini_handler handler = &handle_ini;
     
-    ret = ini_parse(INI_FILE_PATH,ini_handler,(void *)&key_value_pairs);
+    ret = ini_parse(INI_FILE_PATH,handler,(void *)&key_value_pairs);
     if (0 != ret)
     {
         LOG_PRINTF("ret from ini_parse was: %d\n",ret);

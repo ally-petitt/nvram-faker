@@ -45,6 +45,6 @@ clean:
 	-rm *.o
 	-rm *.so
 	-rm $(EXE)
-	make -C $(INI_PATH) $@
+#	make -C $(INI_PATH) $@ # can cause errors in new version of ini
 
 
